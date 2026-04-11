@@ -4,7 +4,7 @@
     name: portfolio
   spec:
     selector:
-      app: portfolio
+      deployment: portfolio
     ports:
     - port: 3000
       targetPort: 3000

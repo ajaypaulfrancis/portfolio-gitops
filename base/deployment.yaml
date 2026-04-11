@@ -5,12 +5,12 @@ metadata:
 spec:
   replicas: 1
   selector:
-  matchLabels:
-    app: portfolio
+    matchLabels:
+      deployment: portfolio
   template:
     metadata:
       labels:
-        app: portfolio
+        deployment: portfolio
     spec:
       containers:
       - name: portfolio
