@@ -1,4 +1,4 @@
-  replicaCount: 1
+  replicaCount: 2
   image:
     repository: image-registry.openshift-image-registry.svc:5000/portfolio/portfolio
     tag: latest
