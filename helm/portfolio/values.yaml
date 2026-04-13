@@ -2,7 +2,7 @@
   image:
     repository: image-registry.openshift-image-registry.svc:5000/portfolio/portfolio
     tag: latest
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
   service:
     port: 3000
     targetPort: 3000
