@@ -1,0 +1,27 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerTemplate
+metadata:
+  name: portfolio-triggertemplate
+  namespace: portfolio
+spec:
+  params:
+    - name: git-ref
+    - name: git-repo-url
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1
+      kind: PipelineRun
+      metadata:
+        generateName: portfolio-pipeline-run-
+        namespace: portfolio
+      spec:
+        pipelineRef:
+          name: portfolio-pipeline
+        taskRunTemplate:
+          serviceAccountName: pipeline
+        params:
+          - name: BUILDCONFIG
+            value: portfolio
+          - name: DEPLOYMENT
+            value: portfolio
+          - name: NAMESPACE
+            value: portfolio

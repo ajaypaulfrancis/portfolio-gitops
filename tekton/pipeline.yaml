@@ -1,0 +1,35 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: portfolio-pipeline
+  namespace: portfolio
+spec:
+  params:
+    - name: BUILDCONFIG
+      type: string
+      default: portfolio
+    - name: DEPLOYMENT
+      type: string
+      default: portfolio
+    - name: NAMESPACE
+      type: string
+      default: portfolio
+  tasks:
+    - name: build
+      taskRef:
+        name: s2i-build
+      params:
+        - name: BUILDCONFIG
+          value: $(params.BUILDCONFIG)
+        - name: NAMESPACE
+          value: $(params.NAMESPACE)
+    - name: deploy
+      taskRef:
+        name: rollout-deploy
+      runAfter:
+        - build
+      params:
+        - name: DEPLOYMENT
+          value: $(params.DEPLOYMENT)
+        - name: NAMESPACE
+          value: $(params.NAMESPACE)

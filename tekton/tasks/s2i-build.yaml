@@ -1,0 +1,21 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: s2i-build
+  namespace: portfolio
+spec:
+  params:
+    - name: BUILDCONFIG
+      type: string
+      default: portfolio
+    - name: NAMESPACE
+      type: string
+      default: portfolio
+  steps:
+    - name: start-build
+      image: image-registry.openshift-image-registry.svc:5000/openshift/cli:latest
+      script: |
+        #!/bin/sh
+        echo "Starting S2I build for $(params.BUILDCONFIG)..."
+        oc start-build $(params.BUILDCONFIG) -n $(params.NAMESPACE) --wait --follow
+        echo "Build complete."

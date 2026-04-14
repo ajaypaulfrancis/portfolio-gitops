@@ -1,0 +1,22 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: rollout-deploy
+  namespace: portfolio
+spec:
+  params:
+    - name: DEPLOYMENT
+      type: string
+      default: portfolio
+    - name: NAMESPACE
+      type: string
+      default: portfolio
+  steps:
+    - name: rollout-restart
+      image: image-registry.openshift-image-registry.svc:5000/openshift/cli:latest
+      script: |
+        #!/bin/sh
+        echo "Restarting deployment $(params.DEPLOYMENT)..."
+        oc rollout restart deployment/$(params.DEPLOYMENT) -n $(params.NAMESPACE)
+        oc rollout status deployment/$(params.DEPLOYMENT) -n $(params.NAMESPACE)
+        echo "Deployment complete."
